@@ -2,9 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+import os
 
 client_id = "49d80436e9ca445c8560d005108b0a36"
-client_secret = "e619978daa3a4fcc85c09af11e2f4ad6"
+client_secret = os.environ['CLISEC']
+
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
                                                client_secret=client_secret,
@@ -23,7 +25,7 @@ titles = soup.select(selector="li ul li h3")
 artists = soup.select(selector="li ul li span")[::7]
 title_list= [title.getText().strip() for title in titles]
 artists_list = [artist.getText().strip() for artist in artists]
-# print(title_list)
+print(title_list)
 # print(artists_list)
 # year = date.split("-")[0]
 # print(year)
