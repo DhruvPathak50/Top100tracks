@@ -1,0 +1,72 @@
+import requests
+from bs4 import BeautifulSoup
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+
+client_id = "49d80436e9ca445c8560d005108b0a36"
+client_secret = "e619978daa3a4fcc85c09af11e2f4ad6"
+
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
+                                               client_secret=client_secret,
+                                               redirect_uri="http://example.com",
+                                               scope='playlist-modify-public'))
+
+# user_id = "31iak5juofovz6ucx47opualkm6u"
+user_id = sp.current_user()['id']
+
+date = input("Which year do you want to travel to? Type the date in the format YYYY-MM-DD: ")
+response = requests.get("https://www.billboard.com/charts/hot-100/"+date)
+data = response.text
+soup = BeautifulSoup(data, 'html.parser')
+# print(soup.prettify())
+titles = soup.select(selector="li ul li h3")
+artists = soup.select(selector="li ul li span")[::7]
+title_list= [title.getText().strip() for title in titles]
+artists_list = [artist.getText().strip() for artist in artists]
+# print(title_list)
+# print(artists_list)
+# year = date.split("-")[0]
+# print(year)
+song_uris = []
+for i in range(len(title_list)):
+    result = sp.search(q=f"{title_list[i]} {artists_list[i]}", type="track")
+    # print(result)
+    try:
+        song_id = result['tracks']['items'][0]['uri']
+        song_uris.append(song_id)
+    except IndexError:
+        print(f"{title_list[i]} doesnt exist on spotify. skipped.")
+
+# print(song_uris)
+# new_playlist = sp.user_playlist_create(user=user_id, name=f"Top100-{date}", public=True)
+# playlist_id = new_playlist['id']
+# add_tracks = sp.playlist_add_items(playlist_id=playlist_id, items=song_uris)
+
+
+
+# results = sp.current_user_saved_tracks()
+# for idx, item in enumerate(results['items']):
+#     track = item['track']
+#     print(idx, track['artists'][0]['name'], " – ", track['name'])
+# params = {
+#     "name": "top100",
+#     "description": "New playlist description",
+#     "public": False
+# }
+# response = requests.get(url=f"https://api.spotify.com/v1/users/{user_id}/playlists", params=params)
+# print(response)
+#
+# user_playlist_create(user, name, public=True, collaborative=False, description=''
+
+
+
+# print(songs['tracks']['items'][0]['uri'])
+# get_playlist_id = sp.us
+
+
+# current_playlist = [i['name'] for i in sp.current_user_playlists()['items']]
+# print(current_playlist)
+# print(user_id)
+
+
+
