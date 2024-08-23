@@ -40,35 +40,10 @@ for i in range(len(title_list)):
         print(f"{title_list[i]} doesnt exist on spotify. skipped.")
 
 # print(song_uris)
-# new_playlist = sp.user_playlist_create(user=user_id, name=f"Top100-{date}", public=True)
-# playlist_id = new_playlist['id']
-# add_tracks = sp.playlist_add_items(playlist_id=playlist_id, items=song_uris)
+new_playlist = sp.user_playlist_create(user=user_id, name=f"Top100-{date}", public=True)
+playlist_id = new_playlist['id']
+add_tracks = sp.playlist_add_items(playlist_id=playlist_id, items=song_uris)
 
-
-
-# results = sp.current_user_saved_tracks()
-# for idx, item in enumerate(results['items']):
-#     track = item['track']
-#     print(idx, track['artists'][0]['name'], " – ", track['name'])
-# params = {
-#     "name": "top100",
-#     "description": "New playlist description",
-#     "public": False
-# }
-# response = requests.get(url=f"https://api.spotify.com/v1/users/{user_id}/playlists", params=params)
-# print(response)
-#
-# user_playlist_create(user, name, public=True, collaborative=False, description=''
-
-
-
-# print(songs['tracks']['items'][0]['uri'])
-# get_playlist_id = sp.us
-
-
-# current_playlist = [i['name'] for i in sp.current_user_playlists()['items']]
-# print(current_playlist)
-# print(user_id)
 
 
 
